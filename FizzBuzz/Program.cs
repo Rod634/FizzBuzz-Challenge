@@ -6,7 +6,8 @@ namespace FizzBuzz
     {
         static void Main(string[] args)
         {
-            RangeFizzBuzz();
+            //RangeFizzBuzz();
+            FizzBuzzOfAList();
         }
 
         private static void RangeFizzBuzz()
@@ -15,9 +16,15 @@ namespace FizzBuzz
             int initial = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Enter the final range number:");
-            int range = int.Parse(Console.ReadLine());
+            int final = int.Parse(Console.ReadLine());
 
-            TwistedFizzBuzz.StandardFizzBuzz(initial, range);
+            TwistedFizzBuzz.StandardFizzBuzz(initial, final);
+        }
+
+        private static void FizzBuzzOfAList()
+        {
+            var list = new List<int>() { -5, 6, 300, 12, 15 };
+            TwistedFizzBuzz.NoSenquentialFIzzBuzz(list);
         }
     }
 }
