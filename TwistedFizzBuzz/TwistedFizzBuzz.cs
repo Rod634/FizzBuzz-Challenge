@@ -32,17 +32,11 @@
             for (int i = init; i <= final; i++)
             {
                 string result = string.Concat(alternativeTokens.Where(at => i % at.Key == 0).Select(at => at.Value));
-                if(result.Length > 0 )
-                {
-                    Console.WriteLine(result);
-                }
-                else
-                {
-                    Console.WriteLine(i);
-                }
+                Console.WriteLine(result.Length > 0 ? result : i);
             }
         }
 
+        //Return a FizzBuz Token or the original number
         private static void GetFizzBuzzValue(int number)
         {
             if (number % 3 == 0 && number % 5 == 0)
@@ -59,7 +53,7 @@
             }
             else
             {
-                Console.WriteLine(number.ToString());
+                Console.WriteLine(number);
             }
         }
 
