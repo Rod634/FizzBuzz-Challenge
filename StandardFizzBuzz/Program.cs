@@ -1,2 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using TwistedFizzBuzzLibrary;
+
+namespace StandardFizzBuzz
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            TwistedFizzBuzz.StandardFizzBuzz(1, 100);
+        }
+    }
+}

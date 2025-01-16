@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FizzBuzz", "FizzBuzz\FizzBuzz.csproj", "{ECCC4D8D-6E7F-41E6-9A6B-CC7919E957C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwistedFizzBuzz", "TwistedFizzBuzz\TwistedFizzBuzz.csproj", "{43458318-B012-4825-B580-1C1B7FD1095C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwistedFizzBuzzLibrary", "TwistedFizzBuzz\TwistedFizzBuzzLibrary.csproj", "{43458318-B012-4825-B580-1C1B7FD1095C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandardFizzBuzz", "StandardFizzBuzz\StandardFizzBuzz.csproj", "{7AB4BE76-CE68-43B5-BA1F-768D1844A961}"
 EndProject
