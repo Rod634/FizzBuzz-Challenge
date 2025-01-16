@@ -8,10 +8,9 @@
             var range = fixRange(init, final);
             init = range[0];
             final = range[1];
-            while (init <= final)
+            for(int i = init; i <= final; i++)
             {
-                GetFizzBuzzValue(init);
-                init++;
+                GetFizzBuzzValue(i);
             }
         }
 
@@ -29,20 +28,18 @@
             var range = fixRange(init, final);
             init = range[0];
             final = range[1];
-            
-            while(init <= final)
+
+            for (int i = init; i <= final; i++)
             {
-                string result = string.Concat(alternativeTokens.Where(at => init % at.Key == 0).Select(at => at.Value));
+                string result = string.Concat(alternativeTokens.Where(at => i % at.Key == 0).Select(at => at.Value));
                 if(result.Length > 0 )
                 {
                     Console.WriteLine(result);
                 }
                 else
                 {
-                    Console.WriteLine(init);
+                    Console.WriteLine(i);
                 }
-
-                init++;
             }
         }
 
@@ -50,15 +47,15 @@
         {
             if (number % 3 == 0 && number % 5 == 0)
             {
-                Console.WriteLine(Constants.FIZZ + Constants.BUZZ);
+                Console.WriteLine("FizzBuzz");
             }
             else if (number % 3 == 0)
             {
-                Console.WriteLine(Constants.FIZZ);
+                Console.WriteLine("Fizz");
             }
             else if (number % 5 == 0)
             {
-                Console.WriteLine(Constants.BUZZ);
+                Console.WriteLine("Buzz");
             }
             else
             {
