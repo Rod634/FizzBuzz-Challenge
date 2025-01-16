@@ -24,7 +24,7 @@ namespace FizzBuzz
         private static void FizzBuzzOfAList()
         {
             var list = new List<int>() { -5, 6, 300, 12, 15 };
-            TwistedFizzBuzz.NoSenquentialFIzzBuzz(list);
+            TwistedFizzBuzz.NonSenquentialFIzzBuzz(list);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace TwistedFizzBuzzLibrary
             }
         }
 
-        public static void NoSenquentialFIzzBuzz(IEnumerable<int> numberList)
+        public static void NonSenquentialFIzzBuzz(IEnumerable<int> numberList)
         {
             foreach (var item in numberList)
             {
