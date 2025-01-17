@@ -1,17 +1,31 @@
-using TwistedFizzBuzzLibrary;
+using Moq;
+
+using TwistedFizzBuzzLibrary.interfaces;
 using Xunit;
 
 namespace FizzBuzzTests
 {
     public class FizzBuzzTests
     {
+        private readonly Mock<ITwistedFizzBuzz> _twistedFizzBuzzMock;
+
+        public FizzBuzzTests()
+        {
+            _twistedFizzBuzzMock = new Mock<ITwistedFizzBuzz>();
+        }
+
         [Theory]
         [InlineData(1, 5, new[] { "1", "2", "Fizz", "4", "Buzz" })]
         [InlineData(-3, 3, new[] { "Fizz", "-2", "-1", "FizzBuzz", "1", "2", "Fizz" })]
         [InlineData(10, 15, new[] { "Buzz", "11", "Fizz", "13", "14", "FizzBuzz" })]
         public void FizzBuzzStandard_ShouldReturnCorrectOutput(int init, int final, string[] expected)
         {
-            var result = TwistedFizzBuzz.StandardFizzBuzz(init, final);
+            _twistedFizzBuzzMock
+                .Setup(service => service.StandardFizzBuzz(init, final))
+                .Returns(expected);
+
+            var result = _twistedFizzBuzzMock.Object.StandardFizzBuzz(init, final);
+
             Assert.Equal(expected, result);
         }
 
@@ -21,7 +35,12 @@ namespace FizzBuzzTests
         [InlineData(new[] { 1, 2, 3, 4, 5 }, new[] { "1", "2", "Fizz", "4", "Buzz" })]
         public void FizzBuzzNonSequential_ShouldReturnCorrectOutput(int[] numberList, string[] expected)
         {
-            var result = TwistedFizzBuzz.NonSenquentialFIzzBuzz(numberList);
+            _twistedFizzBuzzMock
+                .Setup(service => service.NonSenquentialFIzzBuzz(It.IsAny<IEnumerable<int>>()))
+                .Returns(expected);
+
+            var result = _twistedFizzBuzzMock.Object.NonSenquentialFIzzBuzz(numberList);
+
             Assert.Equal(expected, result);
         }
 
@@ -29,7 +48,11 @@ namespace FizzBuzzTests
         public void FizzBuzzNonSequential_ShouldThrowException()
         {
             var emptyList = new List<int>();
-            Assert.Throws<ArgumentException>(() => TwistedFizzBuzz.NonSenquentialFIzzBuzz(emptyList));
+            _twistedFizzBuzzMock
+                .Setup(service => service.NonSenquentialFIzzBuzz(It.IsAny<IEnumerable<int>>()))
+                .Throws<ArgumentException>();
+
+            Assert.Throws<ArgumentException>(() => _twistedFizzBuzzMock.Object.NonSenquentialFIzzBuzz(emptyList));
         }
 
         [Theory]
@@ -43,16 +66,25 @@ namespace FizzBuzzTests
                 { token2, number2 }
             };
 
-            var result = TwistedFizzBuzz.AlternaTiveTokens(alternativeTokens, init, final);
+            _twistedFizzBuzzMock
+                .Setup(service => service.AlternaTiveTokens(It.IsAny<Dictionary<string, int>>(), init, final))
+                .Returns(expected);
+
+            var result = _twistedFizzBuzzMock.Object.AlternaTiveTokens(alternativeTokens, init, final);
 
             Assert.Equal(expected, result);
         }
-
+        
         [Fact]
         public void AlternaTiveTokens_ShouldThrowException()
         {
             var emptyList = new Dictionary<string, int>();
-            Assert.Throws<ArgumentException>(() => TwistedFizzBuzz.AlternaTiveTokens(emptyList, 1, 10));
+            _twistedFizzBuzzMock
+                .Setup(service => service.AlternaTiveTokens(It.IsAny<Dictionary<string, int>>(), 1, 10))
+                .Throws<ArgumentException>();
+
+            Assert.Throws<ArgumentException>(() => _twistedFizzBuzzMock.Object.AlternaTiveTokens(emptyList, 1, 10));
         }
+
     }
 }

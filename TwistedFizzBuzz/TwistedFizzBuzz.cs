@@ -1,11 +1,19 @@
 ﻿using System.Text.Json;
+using TwistedFizzBuzzLibrary.interfaces;
 
 namespace TwistedFizzBuzzLibrary
 {
-    public class TwistedFizzBuzz
+    public class TwistedFizzBuzz : ITwistedFizzBuzz
     {
+        private readonly HttpClient _httpClient;
+
+        public TwistedFizzBuzz(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         //Accept user input for a range of numbers and returns their FizzBuzz output
-        public static IList<string> StandardFizzBuzz(int init, int final)
+        public IList<string> StandardFizzBuzz(int init, int final)
         {
             (init, final) = FixRange(init, final);
             var fizzBuzzList = new List<string>();
@@ -20,7 +28,7 @@ namespace TwistedFizzBuzzLibrary
         }
 
         //Accept user input of a non-sequential set of numbers and returns their FizzBuzz output.
-        public static IList<string> NonSenquentialFIzzBuzz(IEnumerable<int> numberList)
+        public IList<string> NonSenquentialFIzzBuzz(IEnumerable<int> numberList)
         {
             var fizzBuzzList = new List<string>();
 
@@ -38,7 +46,7 @@ namespace TwistedFizzBuzzLibrary
         }
 
         //Accept user input for alternative tokens instead of "Fizz" and "Buzz" and alternative divisors instead of 3 and 5.
-        public static IList<string> AlternaTiveTokens(Dictionary<string, int> alternativeTokens, int init, int final) 
+        public IList<string> AlternaTiveTokens(Dictionary<string, int> alternativeTokens, int init, int final) 
         {
             var alternatveTokensList = new List<string>();
 
@@ -60,7 +68,7 @@ namespace TwistedFizzBuzzLibrary
         }
 
         //Accept user input for API generated tokens provided by https://pie-healthy-swift.glitch.me/
-        public static async Task<IList<string>> AlternativeTokensByApi(int init, int final)
+        public async Task<IList<string>> AlternativeTokensByApi(int init, int final)
         {
             try
             {
@@ -75,14 +83,13 @@ namespace TwistedFizzBuzzLibrary
             }
         }
 
-        private static async Task<Dictionary<string, int>> FetchAlternativeTokensFromApi()
+        private async Task<Dictionary<string, int>> FetchAlternativeTokensFromApi()
         {
-            using HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "TwistedFizzBuzzApp/1.0");
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "TwistedFizzBuzzApp/1.0");
 
             try
             {
-                string response = await client.GetStringAsync("https://pie-healthy-swift.glitch.me/word");
+                string response = await _httpClient.GetStringAsync("https://pie-healthy-swift.glitch.me/word");
                 var data = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
 
                 if (data == null || !data.ContainsKey("word") || !data.ContainsKey("number"))
@@ -102,7 +109,7 @@ namespace TwistedFizzBuzzLibrary
         }
 
         //Return a FizzBuz Token or the original number
-        private static string GetFizzBuzzValue(int number)
+        private string GetFizzBuzzValue(int number)
         {
             if (number % 3 == 0 && number % 5 == 0)
             {
@@ -121,17 +128,9 @@ namespace TwistedFizzBuzzLibrary
             return number.ToString();
         }
 
-        private static (int Start, int End) FixRange(int start, int end)
+        private (int Start, int End) FixRange(int start, int end)
         {
             return start > end ? (end, start) : (start, end);
-        }
-
-        public static void outPutTokens(IList<string> tokens)
-        {
-            foreach(var token in tokens)
-            {
-                Console.WriteLine(token);
-            }
         }
     }
 }

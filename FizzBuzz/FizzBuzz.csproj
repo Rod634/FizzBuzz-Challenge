@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Infra\Infra.csproj" />
     <ProjectReference Include="..\TwistedFizzBuzz\TwistedFizzBuzzLibrary.csproj" />
   </ItemGroup>
 

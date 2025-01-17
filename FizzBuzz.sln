@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandardFizzBuzz", "Standar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomTokens", "CustomTokens\CustomTokens.csproj", "{6CDF76E7-F0D1-4E48-A433-633D88AF2271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FizzBuzzTests", "FizzBuzzTests\FizzBuzzTests.csproj", "{1AB06CFA-2078-44DF-93B7-F96E83CD8E20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzzTests", "FizzBuzzTests\FizzBuzzTests.csproj", "{1AB06CFA-2078-44DF-93B7-F96E83CD8E20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "Infra\Infra.csproj", "{B38984A1-0F1F-4B5C-A110-462F584BEE1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1AB06CFA-2078-44DF-93B7-F96E83CD8E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AB06CFA-2078-44DF-93B7-F96E83CD8E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AB06CFA-2078-44DF-93B7-F96E83CD8E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38984A1-0F1F-4B5C-A110-462F584BEE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38984A1-0F1F-4B5C-A110-462F584BEE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38984A1-0F1F-4B5C-A110-462F584BEE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38984A1-0F1F-4B5C-A110-462F584BEE1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

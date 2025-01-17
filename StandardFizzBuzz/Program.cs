@@ -1,4 +1,6 @@
-﻿using TwistedFizzBuzzLibrary;
+﻿using Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using TwistedFizzBuzzLibrary.interfaces;
 
 namespace StandardFizzBuzz
 {
@@ -7,7 +9,13 @@ namespace StandardFizzBuzz
         //2
         static void Main(string[] args)
         {
-            TwistedFizzBuzz.StandardFizzBuzz(1, 100);
+            var serviceProvider = DependencyInjection.ConfigureServices();
+            var _twistedFizzBuzzLibrary = serviceProvider.GetService<ITwistedFizzBuzz>();
+            var tokens = _twistedFizzBuzzLibrary.StandardFizzBuzz(1, 100);
+            foreach (var token in tokens)
+            {
+                Console.WriteLine(token);
+            }
         }
     }
 }

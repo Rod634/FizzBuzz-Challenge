@@ -1,4 +1,6 @@
-﻿using TwistedFizzBuzzLibrary;
+﻿using Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using TwistedFizzBuzzLibrary.interfaces;
 
 namespace CustomTokens
 {
@@ -7,6 +9,9 @@ namespace CustomTokens
         //3
         static void Main(string[] args)
         {
+            var serviceProvider = DependencyInjection.ConfigureServices();
+            var twistedFizzBuzzLibrary = serviceProvider.GetService<ITwistedFizzBuzz>();
+
             var customTokens = new Dictionary<string, int>()
             {
                 { "Fizz", 5 },
@@ -14,7 +19,11 @@ namespace CustomTokens
                 { "Bar", 27}
             };
 
-            TwistedFizzBuzz.AlternaTiveTokens(customTokens, -20, 127);
+            var tokens = twistedFizzBuzzLibrary.AlternaTiveTokens(customTokens, -20, 127);
+            foreach (var token in tokens)
+            {
+                Console.WriteLine(token);
+            }
         }
     }
 }
