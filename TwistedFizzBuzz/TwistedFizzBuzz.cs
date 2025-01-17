@@ -55,7 +55,6 @@ namespace TwistedFizzBuzzLibrary
             }
             catch (Exception ex)
             {
-                // Repropaga a exceção para ser tratada em um nível superior
                 throw new ApplicationException("Error processing alternative tokens", ex);
             }
         }
