@@ -15,14 +15,16 @@ namespace FizzBuzz
         //1.1
         private static void RangeFizzBuzz()
         {
-            TwistedFizzBuzz.StandardFizzBuzz(1, 50);
+            var response = TwistedFizzBuzz.StandardFizzBuzz(1, 50);
+            TwistedFizzBuzz.outPutTokens(response);
         }
 
         //1.2
         private static void FizzBuzzOfAList()
         {
             var list = new List<int>() { -5, 6, 300, 12, 15 };
-            TwistedFizzBuzz.NonSenquentialFIzzBuzz(list);
+            var response = TwistedFizzBuzz.NonSenquentialFIzzBuzz(list);
+            TwistedFizzBuzz.outPutTokens(response);
         }
 
         //1.3
@@ -35,13 +37,15 @@ namespace FizzBuzz
                 { "College", 21 }
 
             };
-            TwistedFizzBuzz.AlternaTiveTokens(dict, 1, 100);
+            var response = TwistedFizzBuzz.AlternaTiveTokens(dict, 1, 100);
+            TwistedFizzBuzz.outPutTokens(response);
         }
 
         //1.4
         private static async Task AlternativeTokensByApiAsync()
         {
-            await TwistedFizzBuzz.AlternativeTokensByApi(1, 100);
+            var response = await TwistedFizzBuzz.AlternativeTokensByApi(1, 100);
+            TwistedFizzBuzz.outPutTokens(response);
         }
     }
 }

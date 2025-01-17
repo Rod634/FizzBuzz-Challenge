@@ -1,35 +1,47 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 
 namespace TwistedFizzBuzzLibrary
 {
     public class TwistedFizzBuzz
     {
         //Accept user input for a range of numbers and returns their FizzBuzz output
-        public static void StandardFizzBuzz(int init, int final)
+        public static IList<string> StandardFizzBuzz(int init, int final)
         {
             (init, final) = FixRange(init, final);
+            var fizzBuzzList = new List<string>();
 
             for (int i = init; i <= final; i++)
             {
-                GetFizzBuzzValue(i);
+                var value = GetFizzBuzzValue(i);
+                fizzBuzzList.Add(value);
             }
+
+            return fizzBuzzList;
         }
 
         //Accept user input of a non-sequential set of numbers and returns their FizzBuzz output.
-        public static void NonSenquentialFIzzBuzz(IEnumerable<int> numberList)
+        public static IList<string> NonSenquentialFIzzBuzz(IEnumerable<int> numberList)
         {
-            if(!numberList.Any()) {
+            var fizzBuzzList = new List<string>();
+
+            if (!numberList.Any()) {
                 throw new ArgumentException("The list can't be empty");
             }
 
             foreach (var item in numberList)
             {
-                GetFizzBuzzValue(item);
+                var value = GetFizzBuzzValue(item);
+                fizzBuzzList.Add(value);
             }
+
+            return fizzBuzzList;
         }
 
         //Accept user input for alternative tokens instead of "Fizz" and "Buzz" and alternative divisors instead of 3 and 5.
-        public static void AlternaTiveTokens(Dictionary<string, int> alternativeTokens, int init, int final) {
+        public static IList<string> AlternaTiveTokens(Dictionary<string, int> alternativeTokens, int init, int final) 
+        {
+            var alternatveTokensList = new List<string>();
 
             if (!alternativeTokens.Any())
             {
@@ -41,17 +53,22 @@ namespace TwistedFizzBuzzLibrary
             for (int i = init; i <= final; i++)
             {
                 string result = string.Concat(alternativeTokens.Where(at => i % at.Value == 0).Select(at => at.Key));
-                Console.WriteLine(result.Length > 0 ? result : i);
+                result = result.Length > 0 ? result : i.ToString();
+                alternatveTokensList.Add(result);
             }
+
+            return alternatveTokensList;
         }
 
         //Accept user input for API generated tokens provided by https://pie-healthy-swift.glitch.me/
-        public static async Task AlternativeTokensByApi(int init, int final)
+        public static async Task<IList<string>> AlternativeTokensByApi(int init, int final)
         {
             try
             {
                 var alternativeTokens = await FetchAlternativeTokensFromApi();
-                AlternaTiveTokens(alternativeTokens, init, final);
+                var alternatveTokensList = AlternaTiveTokens(alternativeTokens, init, final);
+
+                return alternatveTokensList;
             }
             catch (Exception ex)
             {
@@ -86,29 +103,36 @@ namespace TwistedFizzBuzzLibrary
         }
 
         //Return a FizzBuz Token or the original number
-        private static void GetFizzBuzzValue(int number)
+        private static string GetFizzBuzzValue(int number)
         {
             if (number % 3 == 0 && number % 5 == 0)
             {
-                Console.WriteLine("FizzBuzz");
+                return "FizzBuzz";
             }
-            else if (number % 3 == 0)
+            
+            if (number % 3 == 0)
             {
-                Console.WriteLine("Fizz");
+                return "Fizz";
             }
-            else if (number % 5 == 0)
+            if (number % 5 == 0)
             {
-                Console.WriteLine("Buzz");
+                return "Buzz";
             }
-            else
-            {
-                Console.WriteLine(number);
-            }
+
+            return number.ToString();
         }
 
         private static (int Start, int End) FixRange(int start, int end)
         {
             return start > end ? (end, start) : (start, end);
+        }
+
+        public static void outPutTokens(IList<string> tokens)
+        {
+            foreach(var token in tokens)
+            {
+                Console.WriteLine(token);
+            }
         }
     }
 }
