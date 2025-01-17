@@ -4,11 +4,12 @@ namespace FizzBuzz
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //RangeFizzBuzz();
             //FizzBuzzOfAList();
             //AlternativeTokens();
+            await AlternativeTokensByApiAsync();
         }
 
         private static void RangeFizzBuzz()
@@ -24,14 +25,19 @@ namespace FizzBuzz
 
         private static void AlternativeTokens()
         {
-            var dict = new Dictionary<int, string>()
+            var dict = new Dictionary<string, int>()
             {
-                { 7, "Poem" },
-                { 17, "Writer" },
-                { 21, "College" }
+                { "Poem", 7 },
+                { "Writer", 17 },
+                { "College", 21 }
 
             };
             TwistedFizzBuzz.AlternaTiveTokens(dict, 1, 100);
+        }
+
+        private static async Task AlternativeTokensByApiAsync()
+        {
+            await TwistedFizzBuzz.AlternativeTokensByApi(1, 100);
         }
     }
 }
