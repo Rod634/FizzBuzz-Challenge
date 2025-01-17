@@ -7,10 +7,9 @@ namespace TwistedFizzBuzzLibrary
         //Accept user input for a range of numbers and returns their FizzBuzz output
         public static void StandardFizzBuzz(int init, int final)
         {
-            var range = fixRange(init, final);
-            init = range[0];
-            final = range[1];
-            for(int i = init; i <= final; i++)
+            (init, final) = FixRange(init, final);
+
+            for (int i = init; i <= final; i++)
             {
                 GetFizzBuzzValue(i);
             }
@@ -19,6 +18,10 @@ namespace TwistedFizzBuzzLibrary
         //Accept user input of a non-sequential set of numbers and returns their FizzBuzz output.
         public static void NonSenquentialFIzzBuzz(IEnumerable<int> numberList)
         {
+            if(!numberList.Any()) {
+                throw new ArgumentException("The list can't be empty");
+            }
+
             foreach (var item in numberList)
             {
                 GetFizzBuzzValue(item);
@@ -27,9 +30,13 @@ namespace TwistedFizzBuzzLibrary
 
         //Accept user input for alternative tokens instead of "Fizz" and "Buzz" and alternative divisors instead of 3 and 5.
         public static void AlternaTiveTokens(Dictionary<string, int> alternativeTokens, int init, int final) {
-            var range = fixRange(init, final);
-            init = range[0];
-            final = range[1];
+
+            if (!alternativeTokens.Any())
+            {
+                throw new ArgumentException("The AlternativeTokens can't be empty");
+            }
+
+            (init, final) = FixRange(init, final);
 
             for (int i = init; i <= final; i++)
             {
@@ -41,20 +48,41 @@ namespace TwistedFizzBuzzLibrary
         //Accept user input for API generated tokens provided by https://pie-healthy-swift.glitch.me/
         public static async Task AlternativeTokensByApi(int init, int final)
         {
+            try
+            {
+                var alternativeTokens = await FetchAlternativeTokensFromApi();
+                AlternaTiveTokens(alternativeTokens, init, final);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada em um nível superior
+                throw new ApplicationException("Error processing alternative tokens", ex);
+            }
+        }
+
+        private static async Task<Dictionary<string, int>> FetchAlternativeTokensFromApi()
+        {
             using HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "TwistedFizzBuzzApp/1.0");
-            var response = await client.GetStringAsync("https://pie-healthy-swift.glitch.me/word");
-            var data = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
 
-            if (data != null && data.ContainsKey("word") && data.ContainsKey("number"))
+            try
             {
+                string response = await client.GetStringAsync("https://pie-healthy-swift.glitch.me/word");
+                var data = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
+
+                if (data == null || !data.ContainsKey("word") || !data.ContainsKey("number"))
+                {
+                    throw new FormatException("API Response format not valid");
+                }
+
                 string word = data["word"].ToString();
                 int number = int.Parse(data["number"].ToString());
-                var alternativeTokens  = new Dictionary<string, int>()
-                {
-                    { word, number }
-                };
-                AlternaTiveTokens(alternativeTokens, init, final);
+
+                return new Dictionary<string, int> { { word, number } };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Fetch data API error", ex);
             }
         }
 
@@ -79,11 +107,9 @@ namespace TwistedFizzBuzzLibrary
             }
         }
 
-        private static IList<int> fixRange(int start, int end)
+        private static (int Start, int End) FixRange(int start, int end)
         {
-            var range = new List<int>() { start, end};
-            range.Sort();
-            return range;
+            return start > end ? (end, start) : (start, end);
         }
     }
 }

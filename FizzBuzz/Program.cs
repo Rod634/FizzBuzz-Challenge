@@ -14,7 +14,7 @@ namespace FizzBuzz
 
         private static void RangeFizzBuzz()
         {
-            TwistedFizzBuzz.StandardFizzBuzz(1, 100);
+            TwistedFizzBuzz.StandardFizzBuzz(1, 50);
         }
 
         private static void FizzBuzzOfAList()
