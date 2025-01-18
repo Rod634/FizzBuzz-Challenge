@@ -10,10 +10,9 @@ namespace Infrastructure
         public static ServiceProvider ConfigureServices()
         {
             return new ServiceCollection()
-                // Registra o HttpClient corretamente, gerenciando sua vida útil de forma correta
-                .AddHttpClient()  // Fábrica HttpClient, garantindo o compartilhamento correto
-                .AddSingleton<ITwistedFizzBuzz, TwistedFizzBuzz>()  // Registra o serviço ITwistedFizzBuzz
-                .BuildServiceProvider();  // Cria e retorna o ServiceProvider
+                .AddHttpClient()  
+                .AddSingleton<ITwistedFizzBuzz, TwistedFizzBuzz>()  
+                .BuildServiceProvider();
         }
     }
 }

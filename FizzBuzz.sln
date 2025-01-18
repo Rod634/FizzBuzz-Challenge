@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzz", "FizzBuzz\FizzBuzz.csproj", "{ECCC4D8D-6E7F-41E6-9A6B-CC7919E957C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzz.FizzBuzzTwist", "FizzBuzz\FizzBuzz.FizzBuzzTwist.csproj", "{ECCC4D8D-6E7F-41E6-9A6B-CC7919E957C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwistedFizzBuzzLibrary", "TwistedFizzBuzz\TwistedFizzBuzzLibrary.csproj", "{43458318-B012-4825-B580-1C1B7FD1095C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzz.TwistedFizzBuzzLibrary", "TwistedFizzBuzz\FizzBuzz.TwistedFizzBuzzLibrary.csproj", "{43458318-B012-4825-B580-1C1B7FD1095C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandardFizzBuzz", "StandardFizzBuzz\StandardFizzBuzz.csproj", "{7AB4BE76-CE68-43B5-BA1F-768D1844A961}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzz.StandardFizzBuzz", "StandardFizzBuzz\FizzBuzz.StandardFizzBuzz.csproj", "{7AB4BE76-CE68-43B5-BA1F-768D1844A961}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomTokens", "CustomTokens\CustomTokens.csproj", "{6CDF76E7-F0D1-4E48-A433-633D88AF2271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzz.CustomTokens", "CustomTokens\FizzBuzz.CustomTokens.csproj", "{6CDF76E7-F0D1-4E48-A433-633D88AF2271}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzzTests", "FizzBuzzTests\FizzBuzzTests.csproj", "{1AB06CFA-2078-44DF-93B7-F96E83CD8E20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzz.FizzBuzzTests", "FizzBuzzTests\FizzBuzz.FizzBuzzTests.csproj", "{1AB06CFA-2078-44DF-93B7-F96E83CD8E20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "Infra\Infra.csproj", "{B38984A1-0F1F-4B5C-A110-462F584BEE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FizzBuzz.Infra", "Infra\FizzBuzz.Infra.csproj", "{B38984A1-0F1F-4B5C-A110-462F584BEE1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
