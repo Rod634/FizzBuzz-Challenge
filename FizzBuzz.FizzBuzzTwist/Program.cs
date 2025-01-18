@@ -16,7 +16,7 @@ namespace FizzBuzz
             //RangeFizzBuzz();
             //FizzBuzzOfAList();
             //AlternativeTokens();
-            await AlternativeTokensByApiAsync();
+            //await AlternativeTokensByApiAsync();
         }
 
         //1.1
