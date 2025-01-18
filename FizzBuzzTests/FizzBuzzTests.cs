@@ -1,7 +1,10 @@
+using FizzBuzz.Services;
+using FizzBuzz.Services.Interfaces;
 using Moq;
 using Moq.Protected;
 using System.Net;
 using System.Text.Json;
+using TwistedFizzBuzzLibrary;
 using TwistedFizzBuzzLibrary.interfaces;
 using Xunit;
 
@@ -9,15 +12,17 @@ namespace FizzBuzzTests
 {
     public class FizzBuzzTests
     {
-        private readonly Mock<ITwistedFizzBuzz> _twistedFizzBuzzMock;
         private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler;
         private readonly HttpClient _mockHttpClient;
+        private readonly IGlitchService _glitchService;
+        private readonly ITwistedFizzBuzz _twistedFizzBuzzLibrary;
 
         public FizzBuzzTests()
         {
-            _twistedFizzBuzzMock = new Mock<ITwistedFizzBuzz>();
             _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
             _mockHttpClient = new HttpClient(_mockHttpMessageHandler.Object);
+            _glitchService = new GlitchService(_mockHttpClient);
+            _twistedFizzBuzzLibrary = new TwistedFizzBuzz(_glitchService);
         }
 
         [Theory]
@@ -26,12 +31,7 @@ namespace FizzBuzzTests
         [InlineData(10, 15, new[] { "Buzz", "11", "Fizz", "13", "14", "FizzBuzz" })]
         public void FizzBuzzStandard_ShouldReturnCorrectOutput(int init, int final, string[] expected)
         {
-            _twistedFizzBuzzMock
-                .Setup(service => service.StandardFizzBuzz(init, final))
-                .Returns(expected);
-
-            var result = _twistedFizzBuzzMock.Object.StandardFizzBuzz(init, final);
-
+            var result = _twistedFizzBuzzLibrary.StandardFizzBuzz(init, final);
             Assert.Equal(expected, result);
         }
 
@@ -41,12 +41,7 @@ namespace FizzBuzzTests
         [InlineData(new[] { 1, 2, 3, 4, 5 }, new[] { "1", "2", "Fizz", "4", "Buzz" })]
         public void FizzBuzzNonSequential_ShouldReturnCorrectOutput(int[] numberList, string[] expected)
         {
-            _twistedFizzBuzzMock
-                .Setup(service => service.NonSenquentialFIzzBuzz(It.IsAny<IEnumerable<int>>()))
-                .Returns(expected);
-
-            var result = _twistedFizzBuzzMock.Object.NonSenquentialFIzzBuzz(numberList);
-
+            var result = _twistedFizzBuzzLibrary.NonSenquentialFIzzBuzz(numberList);
             Assert.Equal(expected, result);
         }
 
@@ -54,11 +49,7 @@ namespace FizzBuzzTests
         public void FizzBuzzNonSequential_ShouldThrowException()
         {
             var emptyList = new List<int>();
-            _twistedFizzBuzzMock
-                .Setup(service => service.NonSenquentialFIzzBuzz(It.IsAny<IEnumerable<int>>()))
-                .Throws<ArgumentException>();
-
-            Assert.Throws<ArgumentException>(() => _twistedFizzBuzzMock.Object.NonSenquentialFIzzBuzz(emptyList));
+            Assert.Throws<ArgumentException>(() => _twistedFizzBuzzLibrary.NonSenquentialFIzzBuzz(emptyList));
         }
 
         [Theory]
@@ -72,11 +63,7 @@ namespace FizzBuzzTests
                 { token2, number2 }
             };
 
-            _twistedFizzBuzzMock
-                .Setup(service => service.AlternaTiveTokens(It.IsAny<Dictionary<string, int>>(), init, final))
-                .Returns(expected);
-
-            var result = _twistedFizzBuzzMock.Object.AlternaTiveTokens(alternativeTokens, init, final);
+            var result = _twistedFizzBuzzLibrary.AlternaTiveTokens(alternativeTokens, init, final);
 
             Assert.Equal(expected, result);
         }
@@ -85,11 +72,7 @@ namespace FizzBuzzTests
         public void AlternaTiveTokens_ShouldThrowException()
         {
             var emptyList = new Dictionary<string, int>();
-            _twistedFizzBuzzMock
-                .Setup(service => service.AlternaTiveTokens(It.IsAny<Dictionary<string, int>>(), 1, 10))
-                .Throws<ArgumentException>();
-
-            Assert.Throws<ArgumentException>(() => _twistedFizzBuzzMock.Object.AlternaTiveTokens(emptyList, 1, 10));
+            Assert.Throws<ArgumentException>(() => _twistedFizzBuzzLibrary.AlternaTiveTokens(emptyList, 1, 10));
         }
 
         [Fact]
@@ -116,13 +99,8 @@ namespace FizzBuzzTests
 
 
             var expected = new List<string> { "1", "2", "Fizz", "4", "5" };
-            _twistedFizzBuzzMock
-                .Setup(service => service.AlternaTiveTokens(It.IsAny<Dictionary<string, int>>(), 1, 5))
-                .Returns(expected);
 
-
-            var service = new TwistedFizzBuzzLibrary.TwistedFizzBuzz(_mockHttpClient);
-            var result = await service.AlternativeTokensByApi(1, 5);
+            var result = await _twistedFizzBuzzLibrary.AlternativeTokensByApi(1, 5);
 
             Assert.Equal(expected, result);
         }
@@ -139,9 +117,7 @@ namespace FizzBuzzTests
                 )
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.InternalServerError));
 
-            var service = new TwistedFizzBuzzLibrary.TwistedFizzBuzz(_mockHttpClient);
-
-            await Assert.ThrowsAsync<ApplicationException>(() => service.AlternativeTokensByApi(1, 5));
+            await Assert.ThrowsAsync<ApplicationException>(() => _twistedFizzBuzzLibrary.AlternativeTokensByApi(1, 5));
         }
 
 

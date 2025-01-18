@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FizzBuzz.Services;
+using FizzBuzz.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using TwistedFizzBuzzLibrary;
 using TwistedFizzBuzzLibrary.interfaces;
 
@@ -12,6 +14,7 @@ namespace Infrastructure
             return new ServiceCollection()
                 .AddHttpClient()  
                 .AddSingleton<ITwistedFizzBuzz, TwistedFizzBuzz>()  
+                .AddSingleton<IGlitchService, GlitchService>()
                 .BuildServiceProvider();
         }
     }

@@ -1,15 +1,16 @@
-﻿using System.Text.Json;
+﻿using FizzBuzz.Services.Interfaces;
+using System.Text.Json;
 using TwistedFizzBuzzLibrary.interfaces;
 
 namespace TwistedFizzBuzzLibrary
 {
     public class TwistedFizzBuzz : ITwistedFizzBuzz
     {
-        private readonly HttpClient _httpClient;
+        private readonly IGlitchService _glitchService;
 
-        public TwistedFizzBuzz(HttpClient httpClient)
+        public TwistedFizzBuzz(IGlitchService glitchService)
         {
-            _httpClient = httpClient;
+            _glitchService = glitchService;
         }
 
         //Accept user input for a range of numbers and returns their FizzBuzz output
@@ -72,7 +73,7 @@ namespace TwistedFizzBuzzLibrary
         {
             try
             {
-                var alternativeTokens = await FetchAlternativeTokensFromApi();
+                var alternativeTokens = await _glitchService.FetchAlternativeTokensFromApi();
                 var alternatveTokensList = AlternaTiveTokens(alternativeTokens, init, final);
 
                 return alternatveTokensList;
@@ -80,31 +81,6 @@ namespace TwistedFizzBuzzLibrary
             catch (Exception ex)
             {
                 throw new ApplicationException("Error processing alternative tokens", ex);
-            }
-        }
-
-        private async Task<Dictionary<string, int>> FetchAlternativeTokensFromApi()
-        {
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "TwistedFizzBuzzApp/1.0");
-
-            try
-            {
-                string response = await _httpClient.GetStringAsync("https://pie-healthy-swift.glitch.me/word");
-                var data = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
-
-                if (data == null || !data.ContainsKey("word") || !data.ContainsKey("number"))
-                {
-                    throw new FormatException("API Response format not valid");
-                }
-
-                string word = data["word"].ToString();
-                int number = int.Parse(data["number"].ToString());
-
-                return new Dictionary<string, int> { { word, number } };
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Fetch data API error", ex);
             }
         }
 
